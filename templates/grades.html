@@ -8,12 +8,33 @@
 <body>
 <div class="container mt-5">
     <h2 class="mb-4">Grades</h2>
+
+    <!-- Add Grade Form -->
+    <form action="/add-grade" method="POST" class="mb-4">
+        <div class="row g-2">
+            <div class="col">
+                <input type="number" name="student_id" class="form-control" placeholder="Student ID" required>
+            </div>
+            <div class="col">
+                <input type="number" name="course_id" class="form-control" placeholder="Course ID" required>
+            </div>
+            <div class="col">
+                <input type="number" name="score" class="form-control" placeholder="Score" required>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-success">Add Grade</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Grades Table -->
     <table class="table table-bordered">
         <thead class="table-dark">
             <tr>
                 <th>Student Name</th>
                 <th>Course Title</th>
                 <th>Score</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -22,37 +43,11 @@
                 <td>{{ g.full_name }}</td>
                 <td>{{ g.course_title }}</td>
                 <td>{{ g.score }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Grades</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<div class="container mt-5">
-    <h2 class="mb-4">Grades</h2>
-    <table class="table table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th>Student Name</th>
-                <th>Course Title</th>
-                <th>Score</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for g in grades %}
-            <tr>
-                <td>{{ g.full_name }}</td>
-                <td>{{ g.course_title }}</td>
-                <td>{{ g.score }}</td>
+                <td>
+                    <form action="/delete-grade/{{ g.grade_id }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

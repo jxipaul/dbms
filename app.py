@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
+
 import mysql.connector
 
 app = Flask(__name__)
@@ -211,6 +212,66 @@ def active_students_grades():
     cursor.close()
     conn.close()
     return render_template('active_students_grades.html', students=students)
+
+#Grades.html webpage queiries
+@app.route('/grades')
+def grades():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    query = """
+    SELECT 
+        g.grade_id,
+        s.full_name, 
+        c.course_title, 
+        g.score
+    FROM Grades g
+    JOIN Students s ON g.student_id = s.student_id
+    JOIN Courses c ON g.course_id = c.course_id
+    """
+    cursor.execute(query)
+    grades = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template("grades.html", grades=grades)
+
+
+#add and delete grade records 
+@app.route('/add-grade', methods=['POST'])
+def add_grade():
+    student_id = request.form['student_id']
+    course_id = request.form['course_id']
+    score = request.form['score']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO Grades (student_id, course_id, score)
+        VALUES (%s, %s, %s)
+    """, (student_id, course_id, score))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('grades'))
+
+@app.route('/delete-grade/<int:grade_id>', methods=['POST'])
+def delete_grade(grade_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM Grades WHERE grade_id = %s", (grade_id,))
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('grades'))
+
 
 # Main entry point
 if __name__ == '__main__':
