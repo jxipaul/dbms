@@ -172,7 +172,7 @@ def course_enrollments():
     courses = cursor.fetchall()
     cursor.close()
     conn.close()
-    return render_template('course_popularity.html', courses=courses)
+    return render_template('course_enrollments.html', courses=courses)
 
 # Route: Active Students
 @app.route('/active-students')
