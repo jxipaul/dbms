@@ -105,7 +105,7 @@ def index():
     students = cursor.fetchall()
     cursor.close()
     conn.close()
-    return render_template('home.html', students=students)
+    return render_template('dashboard.html', students=students)
 
 # Route: Dashboard
 @app.route('/dashboard')
