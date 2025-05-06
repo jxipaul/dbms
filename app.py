@@ -19,16 +19,21 @@ def get_db_connection():
 @app.route('/add-student', methods=['POST'])
 def add_student():
     from flask import request
+    print(request.form) 
+    student_id = request.form['student_id']
     full_name = request.form['full_name']
+    dob = request.form['dob']
     email = request.form['email']
+    program_id = request.form['program_id']
+    admission_year = request.form['admission_year']
     status = request.form['status']
 
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        INSERT INTO Students (full_name, email, status)
-        VALUES (%s, %s, %s)
-    """, (full_name, email, status))
+        INSERT INTO Students (student_id, full_name, dob, email, program_id, admission_year, status)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """, (student_id, full_name, dob, email, program_id, admission_year, status))
     conn.commit()
     cursor.close()
     conn.close()
@@ -129,7 +134,6 @@ def top_students():
         JOIN Grades g ON s.student_id = g.student_id
         GROUP BY s.student_id
         ORDER BY average_score DESC
-        LIMIT 5
     """)
     students = cursor.fetchall()
     cursor.close()

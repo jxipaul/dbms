@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='books.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9); /* Optional for contrast */
+            padding: 20px;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -23,6 +38,9 @@
                 <a class="nav-link" href="/active-students">Active Students</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="/grades">Grades</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="/top-students">Top Students</a>
               </li>
             </ul>
@@ -33,13 +51,40 @@
         <h1 class="mb-4">Dashboard</h1>
 
         <div class="row">
-            <!-- Filter Section -->
+
+
+            
+            <!-- Filter Section 
             <div class="col-md-4">
                 <h2>Filter Students</h2>
                 <form action="/filter-students" method="GET">
                     <div class="mb-3">
                         <label for="min_score" class="form-label">Minimum Average Score</label>
-                        <input type="number" class="form-control" id="min_score" name="min_score" step="0.01">
+                        <input <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                            <div class="container-fluid">
+                              <a class="navbar-brand" href="/">Student Dashboard</a>
+                              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                              </button>
+                              <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="navbar-nav ms-auto">
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="/course-enrollments">Course Enrollments</a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="/active-students">Active Students</a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="/grades">grades</a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="/top-students">Top Students</a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </nav>type="number" class="form-control" id="min_score" name="min_score" step="0.01">
                     </div>
                     <div class="mb-3">
                         <label for="max_score" class="form-label">Maximum Average Score</label>
@@ -59,18 +104,35 @@
                     <button type="submit" class="btn btn-secondary">Apply Filters</button>
                 </form>
             </div>
+        -->
 
             <!-- Add Student Form -->
-            <div class="col-md-8">
+            <div class="col-12">
                 <h2>Add New Student</h2>
                 <form action="/add-student" method="POST">
+                    <div class="mb-3">
+                        <label for="student_id" class="form-label">Student ID</label>
+                        <input type="text" class="form-control" id="student_id" name="student_id" required>
+                    </div>
                     <div class="mb-3">
                         <label for="full_name" class="form-label">Full Name</label>
                         <input type="text" class="form-control" id="full_name" name="full_name" required>
                     </div>
                     <div class="mb-3">
+                        <label for="dob" class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" id="dob" name="dob" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="program_id" class="form-label">Program ID</label>
+                        <input type="number" class="form-control" id="program_id" name="program_id" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="admission_year" class="form-label">Admission year</label>
+                        <input type="number" class="form-control" id="admission_year" name="admission_year" required>
                     </div>
                     <div class="mb-3">
                         <label for="status" class="form-label">Status</label>
